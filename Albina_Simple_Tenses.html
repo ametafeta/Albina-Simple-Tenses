@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Albina: Simple Tenses</title>
+<style>
+:root{color-scheme:light;--bg:#fff1ea;--card:#fffdfb;--ink:#4d3b3f;--mut:#9b7f86;--pk:#ff9db6;--pk2:#ffe3ea;--mt:#86cdf2;--mt2:#e2f3fd;--sn:#ffb36b;--rd:#ff8f7a;--rd2:#ffe5dc;--ln:#f9d9cb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.hero{padding:22px 16px 14px;text-align:center;background:linear-gradient(135deg,#ffd3de,#ffe1b9 55%,#cfeafb)}
+h1{margin:0;font-size:24px}.sub{margin:4px 0 12px;color:var(--mut);font-size:14px}
+.bar{height:10px;background:var(--card);border-radius:9px;overflow:hidden;max-width:420px;margin:auto}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pk),var(--sn));transition:width .4s}
+#cnt{font-size:13px;color:var(--mut);margin-top:6px}
+main{max-width:640px;margin:auto;padding:14px 12px 40px}
+.card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:14px;border:2px solid var(--ln)}
+.card.done{border-color:var(--mt)}
+h2{margin:0 0 4px;font-size:18px}.card.done h2::after{content:" ✓";color:var(--mt)}
+.instr{margin:0 0 12px;color:var(--mut);font-size:14px}
+button{font:inherit;color:inherit;cursor:pointer}
+.chip{background:var(--pk2);border:2px solid transparent;border-radius:14px;padding:8px 12px;margin:3px;text-align:left}
+.chip.sel{border-color:var(--pk)}.chip.ok{background:var(--mt2);border-color:var(--mt)}.chip.bad{background:var(--rd2);border-color:var(--rd)}
+.fc{display:block;width:100%;margin:6px 0;padding:14px;border-radius:16px;border:2px dashed var(--pk);background:var(--pk2);text-align:center}
+.fc.back{background:var(--mt2);border-color:var(--mt);color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6px}.col{display:flex;flex-direction:column}.col .chip{margin:3px 0}
+.q{padding:10px 0;border-top:1px solid var(--ln)}.q:first-of-type{border-top:0}
+.en{margin:0}.ru{margin:2px 0 6px;color:var(--mut);font-size:14px}.log .ru{margin:8px 0}
+.opts{display:flex;flex-wrap:wrap}
+input{font:inherit;width:110px;max-width:34vw;border:0;border-bottom:2px solid var(--pk);background:var(--pk2);color:var(--ink);border-radius:8px 8px 0 0;padding:2px 6px;margin:0 3px}
+input.ok{border-color:var(--mt);background:var(--mt2)}input.bad{border-color:var(--rd);background:var(--rd2)}
+.w{display:inline-block;font-size:12px;font-weight:700;background:var(--sn);color:#4a3a00;border-radius:8px;padding:1px 7px;margin-left:4px}
+.go{margin-top:10px;background:var(--pk);color:#fff;border:0;border-radius:14px;padding:10px 18px;font-weight:700}
+.ans{min-height:46px;border:2px dashed var(--ln);border-radius:14px;padding:4px;margin:6px 0}.ans.ok{border-color:var(--mt);background:var(--mt2)}.ans.bad{border-color:var(--rd);background:var(--rd2)}
+.bank{display:flex;flex-wrap:wrap}
+.txt{background:var(--pk2);border-radius:14px;padding:6px 12px;margin-bottom:10px}
+.boss{background:linear-gradient(135deg,var(--pk2),var(--mt2));border-radius:14px;padding:8px 12px;margin-bottom:8px}
+.hp{height:10px;border-radius:8px;background:var(--card);overflow:hidden}.hp i{display:block;height:100%;width:100%;background:var(--rd);transition:width .3s}
+.lv{color:var(--rd);letter-spacing:2px}
+body.t2{--bg:#f1f0fc;--card:#fcfbff;--ink:#3d3b5c;--mut:#8582a8;--pk:#9b8bec;--pk2:#ebe7fc;--mt:#7fc3ee;--mt2:#e0f1fc;--sn:#b9aaf5;--rd:#f29aa8;--rd2:#fdebee;--ln:#dcd8f3}
+body.t2 .hero{background:linear-gradient(135deg,#dbe4ff,#e9dcff 55%,#d4f0fb)}
+body.t2 .w{color:#3d3b5c}
+body.t3{--bg:#f3f9e9;--card:#fdfff9;--ink:#36503a;--mut:#7d9a7a;--pk:#68b546;--pk2:#e8f5d9;--mt:#4fb8a0;--mt2:#d9f3ea;--sn:#c5e17a;--rd:#f39a8a;--rd2:#fdeae6;--ln:#d8eac3}
+body.t3 .hero{background:linear-gradient(135deg,#e4f5c9,#d3f0c2 55%,#c9f0e3)}
+body.t3 .w{color:#36503a}
+.ref{width:100%;border-collapse:collapse;font-size:12px}
+.ref th,.ref td{border:1px solid var(--ln);padding:5px;vertical-align:top;text-align:left}
+.ref th{background:var(--pk2)}.ref small{font-weight:400;color:var(--mut)}
+.ref .ru{font-size:11px;margin:2px 0 0}
+body.t4{--bg:#fff9e5;--card:#fffdf5;--ink:#5a4a2c;--mut:#a08c62;--pk:#e3b04a;--pk2:#fdf0c9;--mt:#8fcf9a;--mt2:#e3f6e6;--sn:#f6c978;--rd:#f4948a;--rd2:#fde8e4;--ln:#f3e4b8}
+body.t4 .hero{background:linear-gradient(135deg,#ffefb8,#ffe2c2 55%,#fff6d5)}
+body.t4 .go,body.t4 .tab.on{color:#4a3510}
+#tabs{display:none;gap:4px;max-width:520px;margin:0 auto 12px}
+.tab{flex:1;background:var(--card);border:2px solid var(--ln);border-radius:14px;padding:8px 2px;font-weight:700;font-size:12px;color:var(--mut)}
+.tab.on{background:var(--pk);border-color:var(--pk);color:#fff}
+#fin{display:none;text-align:center;font-weight:700;padding:14px}
+</style>
+</head>
+<body class="t3">
+<header class="hero">
+<h1>Albina: Simple Tenses 🌿</h1>
+<p class="sub" id="sub"></p>
+<div id="tabs"></div>
+<div class="bar"><i id="pb"></i></div><div id="cnt"></div>
+</header>
+<main id="app"></main>
+<div id="fin"></div>
+<script>
+const h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.innerHTML=x;return e};
+const norm=s=>s.toLowerCase().replace(/[’`]/g,"'").replace(/[.,!?]/g,"").replace(/\s+/g," ").trim();
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+let dn=0;
+const EJ=[[/China|Chinese|Shenzhen|Shanghai/,"🇨🇳"],[/Kazakhstan/,"🇰🇿"],[/customs/i,"🛃"],[/container|ship|\bport\b/,"🚢"],[/truck|driver/,"🚚"],[/warehouse/,"🏭"],[/train/,"🚆"],[/documents|papers/,"📄"],[/director|boss|manager/,"💼"],[/budget|money|salar|fine|prices/,"💰"],[/university|exam/,"🎓"],[/Incoterms/,"📦"],[/flight|plane|airport|visa/,"✈️"],[/hotel/,"🏨"],[/contract|sign/,"📝"],[/partner|meeting|negotiat|offer/,"🤝"],[/factory|samples/,"🏭"],[/Richard|\bcat\b/,"🐈"],[/Andrey/,"💼"],[/office|emails?\b|report/,"💻"],[/coffee/,"☕"],[/goods|cargo|shipment|deliver/,"📦"],[/client/,"🤝"],[/Albina|\bshe\b/,"🌸"],[/\bI\b|\bwe\b/i,"✨"]];
+const EMJ=s=>{const m=EJ.find(x=>x[0].test(s));return m?m[1]:""};const EM=s=>s+" "+EMJ(s);
+const IC=["🃏","🧩","✅","✍️","🔤","🚢","🚚","📝","📋","📖","👑"];
+function flip(el,d,done){let n=0;d.forEach(([e,r])=>{e=EM(e);const c=h("button","fc",e);let o=0;c.onclick=()=>{o=!o;c.innerHTML=o?r:e;c.classList.toggle("back",o);if(o&&!c.s){c.s=1;if(++n==d.length)done()}};el.append(c)})}
+function match(el,d,done){const L=h("div","col"),R=h("div","col"),log=h("div","log"),g=h("div","two");let sl=null,sr=null,n=0;
+const mk=(t,i,side)=>{const b=h("button","chip",t);b.onclick=()=>{if(b.classList.contains("ok"))return;(side?R:L).querySelectorAll(".sel").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");if(side)sr=[i,b];else sl=[i,b];
+if(sl&&sr){if(sl[0]==sr[0]){sl[1].className=sr[1].className="chip ok";log.append(h("p","ru",EM(d[i][0]+" "+d[i][1])+"<br><i>"+d[i][2]+"</i>"));if(++n==d.length)done()}else[sl[1],sr[1]].forEach(x=>{x.classList.remove("sel");x.classList.add("bad");setTimeout(()=>x.classList.remove("bad"),500)});sl=sr=null}};return b};
+d.forEach((p,i)=>L.append(mk(p[0],i,0)));shuf(d.map((p,i)=>i)).forEach(i=>R.append(mk(d[i][1],i,1)));g.append(L,R);el.append(g,log)}
+function mc(el,d,done,cb){let n=0;d.forEach(q=>{const b=h("div","q","<p class=en>"+EM(q.s)+"</p><p class=ru>"+q.r+"</p>"),o=h("div","opts");
+q.o.forEach(t=>{const x=h("button","chip",t);x.onclick=()=>{if(b.s||b.l)return;if(t==q.a){x.classList.add("ok");b.s=1;cb&&cb(1);if(++n==d.length)done()}else{x.classList.add("bad");cb&&cb(0)}};o.append(x)});b.append(o);el.append(b)})}
+function typ(el,d,done){const rows=d.map(q=>{const [a,b]=q.s.split("___"),r=h("div","q","<p class=en>"+a+"<input autocomplete=off autocapitalize=off spellcheck=false>"+b+" "+EMJ(q.s)+" <span class=w>"+q.w+"</span></p><p class=ru>"+q.r+"</p>");el.append(r);return r});
+const btn=h("button","go","Проверить");btn.onclick=()=>{let ok=0;rows.forEach((r,i)=>{const i2=r.querySelector("input"),g=d[i].a.includes(norm(i2.value));i2.className=g?"ok":"bad";ok+=g});btn.textContent="Проверить ещё раз ("+ok+"/"+d.length+")";if(ok==d.length)done()};el.append(btn)}
+function build(el,d,done,tr){let n=0;d.forEach(q=>{const A=tr==2?q.r:q.e,box=h("div","q"),pr=h("p","ru",tr==1?q.r+" "+EMJ(q.e):tr==2?q.e+" "+EMJ(q.e):"Собери предложение ✍️"),ans=h("div","ans"),bk=h("div","bank"),c=h("button","go","Проверить");
+const mk=t=>{const b=h("button","chip",t);b.onclick=()=>{if(box.ok)return;(b.parentNode==bk?ans:bk).append(b)};return b};
+shuf(A.split(" ").concat(q.x||[])).forEach(t=>bk.append(mk(t)));
+c.onclick=()=>{const s=[...ans.children].map(b=>b.textContent).join(" ");if(norm(s)==norm(A)){box.ok=1;ans.classList.add("ok");if(!tr)pr.textContent=q.r+" "+EMJ(q.e);if(++n==d.length)done()}else{ans.classList.add("bad");setTimeout(()=>ans.classList.remove("bad"),500)}};
+box.append(pr,ans,bk,c);el.append(box)})}
+function tf(el,t,qs,done){const tx=h("div","txt");t.forEach(e=>tx.append(h("p","en",e)));el.append(tx);let n=0;
+qs.forEach(q=>{const b=h("div","q","<p class=en>"+EM(q.s)+"</p><p class=ru>"+q.r+"</p>"),o=h("div","opts");
+["True","False"].forEach(t=>{const x=h("button","chip",t);x.onclick=()=>{if(b.s)return;if((t=="True")==q.a){x.classList.add("ok");b.s=1;if(++n==qs.length)done()}else x.classList.add("bad")};o.append(x)});b.append(o);el.append(b)})}
+function boss(el,d,done,nm){nm=nm||"Customs Officer 🛃";const run=()=>{el.innerHTML="";let hp=d.length,lv=3;const top=h("div","boss","<b>"+nm+"</b> <span class=lv></span><div class=hp><i></i></div>"),L=top.querySelector(".lv"),B=top.querySelector("i"),body=h("div");
+const up=()=>{L.textContent="♥".repeat(lv);B.style.width=hp/d.length*100+"%"};up();el.append(top,body);
+mc(body,d,done,ok=>{if(ok){hp--;up()}else{lv--;up();if(!lv){body.querySelectorAll(".q").forEach(q=>q.l=1);const r=h("button","go","Босс победил. Попробовать снова");r.onclick=run;body.append(r)}}})};run()}
+
+const REF3={t:"Шпаргалка: Simple",html:'<table class=ref><tr><th></th><th>Утверждение</th><th>Отрицание</th><th>Вопрос</th></tr>'+
+'<tr><th>Present<br><small>every day</small></th><td>I/you/we/they work<br>he/she works<div class=ru>я работаю, он работает</div></td><td>don’t work<br>doesn’t work<div class=ru>я не работаю, он не работает</div></td><td>Do I/you/we/they work?<br>Does he/she work?<div class=ru>ты работаешь? он работает?</div></td></tr>'+
+'<tr><th>Past<br><small>yesterday</small></th><td>worked<br>(или 2-я колонка)<div class=ru>я работал</div></td><td>didn’t work<div class=ru>я не работал</div></td><td>Did … work?<div class=ru>ты работал?</div></td></tr>'+
+'<tr><th>Future<br><small>tomorrow</small></th><td>will work<div class=ru>я буду работать</div></td><td>will not (won’t) work<div class=ru>я не буду работать</div></td><td>Will … work?<div class=ru>ты будешь работать?</div></td></tr></table>'};
+const E3=[
+{t:"Карточки с примерами",i:"Нажми на карточку, чтобы увидеть перевод. Present: V / V-s. Past: V-ed (или 2-я форма). Future: will + V.",f:(e,d)=>flip(e,[
+["Albina works in an office every day.","Альбина работает в офисе каждый день."],
+["Maria worked in an office yesterday.","Мария работала в офисе вчера."],
+["Viktor will work in an office tomorrow.","Виктор будет работать в офисе завтра."],
+["Andrey Viktorovich doesn’t work on weekends.","Андрей Викторович не работает по выходным."],
+["Richard didn’t sleep in the office yesterday.","Ричард вчера не спал в офисе."],
+["Maria will not work in the office tomorrow.","Мария завтра не будет работать в офисе."],
+["Does Andrey Viktorovich work in the office on Saturdays?","Андрей Викторович работает в офисе по субботам?"],
+["Did Richard sleep on the sofa yesterday?","Ричард вчера спал на диване?"],
+["Will Albina work in an office tomorrow?","Альбина будет работать в офисе завтра?"]],d)},
+{t:"Найди пару",i:"Соедини начало предложения с концом. Нажми на левую часть, потом на правую.",f:(e,d)=>match(e,[
+["Maria works in an office","every day.","Мария работает в офисе каждый день."],
+["Viktor worked in an office","yesterday.","Виктор работал в офисе вчера."],
+["Andrey Viktorovich will work in an office","tomorrow.","Андрей Викторович будет работать в офисе завтра."],
+["Richard doesn’t chase mice","on weekends.","Ричард не гоняется за мышами по выходным."],
+["Did Albina work in an office","last week?","Альбина работала в офисе на прошлой неделе?"]],d)},
+{t:"Выбери форму",i:"Выбери правильный вариант.",f:(e,d)=>mc(e,[
+{s:"Viktor ___ in the office every day.",o:["work","works","worked"],a:"works",r:"Виктор работает в офисе каждый день."},
+{s:"Albina ___ a report yesterday.",o:["writes","wrote","will write"],a:"wrote",r:"Вчера Альбина написала отчёт."},
+{s:"___ Andrey Viktorovich work in the office on Saturdays?",o:["Do","Does","Did"],a:"Does",r:"Андрей Викторович работает в офисе по субботам?"},
+{s:"Maria ___ the clients tomorrow.",o:["calls","called","will call"],a:"will call",r:"Завтра Мария позвонит клиентам."},
+{s:"Richard ___ in the office all day yesterday.",o:["sleeps","slept","will sleep"],a:"slept",r:"Вчера Ричард спал в офисе весь день."}],d)},
+{t:"Впиши глагол",i:"Поставь глагол в скобках в нужную форму.",f:(e,d)=>typ(e,[
+{s:"Albina ___ emails every morning.",w:"(write)",a:["writes"],r:"Альбина пишет письма каждое утро."},
+{s:"Viktor ___ to the meeting yesterday.",w:"(not go)",a:["didn't go","did not go"],r:"Виктор вчера не пошёл на встречу."},
+{s:"Andrey Viktorovich ___ a new office next year.",w:"(open)",a:["will open"],r:"В следующем году Андрей Викторович откроет новый офис."},
+{s:"What time ___ Maria start work every day?",w:"(do)",a:["does"],r:"Во сколько Мария начинает работу каждый день?"},
+{s:"Richard ___ a mouse in the office yesterday.",w:"(catch)",a:["caught"],r:"Вчера Ричард поймал мышь в офисе."}],d)},
+{t:"Собери предложение",i:"Нажимай на слова в правильном порядке. Нажми на слово в ответе, чтобы убрать его.",f:(e,d)=>build(e,[
+{e:"Maria checks her emails every morning",r:"Мария проверяет почту каждое утро."},
+{e:"Viktor did not go to the office yesterday",r:"Виктор вчера не ходил в офис."},
+{e:"Will Andrey Viktorovich work in the office tomorrow",r:"Андрей Викторович будет работать в офисе завтра?"},
+{e:"Does Richard sleep on the sofa",r:"Ричард спит на диване?"}],d,0)},
+{t:"Тап-тап карточки: переведи на английский",i:"Собери английский перевод из слов. Осторожно: есть лишние слова.",f:(e,d)=>build(e,[
+{e:"Albina works in a big office",x:["work","worked"],r:"Альбина работает в большом офисе."},
+{e:"Maria didn’t write the report yesterday",x:["doesn’t","wrote"],r:"Мария вчера не написала отчёт."},
+{e:"Will Viktor call the client tomorrow",x:["Did","called"],r:"Виктор позвонит клиенту завтра?"},
+{e:"Does Richard sleep all day",x:["sleeps","Do"],r:"Ричард спит весь день?"}],d,1)},
+{t:"Грамматика, блок 1 (настоящее и прошедшее)",i:"Преобразуй слово справа в нужную форму. Впиши форму в пропуск.",f:(e,d)=>typ(e,[
+{s:"Albina ___ to work by metro every day.",w:"GO",a:["goes"],r:"Альбина ездит на работу на метро каждый день."},
+{s:"Yesterday Maria ___ a long report.",w:"WRITE",a:["wrote"],r:"Вчера Мария написала длинный отчёт."},
+{s:"Viktor ___ coffee in the evening.",w:"NOT DRINK",a:["doesn't drink","does not drink"],r:"Виктор не пьёт кофе вечером."},
+{s:"Andrey Viktorovich ___ Albina last Friday.",w:"CALL",a:["called"],r:"Андрей Викторович позвонил Альбине в прошлую пятницу."},
+{s:"___ Richard eat fish every day?",w:"DO",a:["does"],r:"Ричард ест рыбу каждый день?"}],d)},
+{t:"Грамматика, блок 2 (будущее и вопросы)",i:"Преобразуй слово справа в нужную форму. Впиши форму в пропуск.",f:(e,d)=>typ(e,[
+{s:"Maria ___ in the office tomorrow.",w:"WORK",a:["will work"],r:"Завтра Мария будет работать в офисе."},
+{s:"Viktor ___ the documents last night.",w:"CHECK",a:["checked"],r:"Виктор проверил документы вчера вечером."},
+{s:"___ Andrey Viktorovich finish work at six every day?",w:"DO",a:["does"],r:"Андрей Викторович заканчивает работу в шесть каждый день?"},
+{s:"Next week Albina and Maria ___ a new client.",w:"MEET",a:["will meet"],r:"На следующей неделе Альбина и Мария встретят нового клиента."},
+{s:"Richard ___ to the office yesterday because it was a holiday.",w:"NOT COME",a:["didn't come","did not come"],r:"Ричард вчера не пришёл в офис, потому что был праздник."}],d)},
+{t:"Читаем и проверяем",i:"Прочитай текст без перевода (уровень B1) и отметь: True или False.<br><small>Слова: shipment — партия груза; cargo — груз; freight forwarder — экспедитор; carrier — перевозчик; customs broker — таможенный брокер; invoice — счёт-фактура; packing list — упаковочный лист; bill of lading — коносамент; route — маршрут; delivery schedule — график поставок; warehouse — склад; delay — задержка; customs declaration — таможенная декларация.</small>",f:(e,d)=>tf(e,[
+"Albina works as a logistics coordinator in an office in the centre of Moscow. Her main task is to organise shipments from China to Russia, so she communicates with freight forwarders, carriers and customs brokers every day. 💻",
+"Maria is responsible for documents. She prepares invoices and packing lists, and she checks every bill of lading before the container leaves the port. Viktor deals with clients and tracks the cargo online, but he doesn’t like writing reports, which often makes Maria angry.",
+"Last week a container was delayed at the port of Shanghai because of a storm. The client called Viktor three times, and Albina had to find another route. In the end, she booked a place on a train, and the goods arrived only two days late. Andrey Viktorovich didn’t blame anybody, although the delay cost the company a lot of money.",
+"There is also a cat in the office. His name is Richard, and he usually sleeps on a pile of old customs declarations. Yesterday he caught a mouse in the warehouse next to the office, so Maria gave him some fish as a reward.",
+"Tomorrow a very important client will visit the office. Albina will present a new delivery schedule, and Viktor will explain the prices. The client wants to send fifty containers a year, so Andrey Viktorovich will give a short speech and promise fast delivery. Richard will probably sleep through everything. 🐈"],[
+{s:"Albina organises shipments from China to Russia.",a:true,r:"Альбина организует перевозки из Китая в Россию."},
+{s:"Maria checks the bill of lading before the container leaves the port.",a:true,r:"Мария проверяет коносамент до того, как контейнер уйдёт из порта."},
+{s:"Viktor writes all the reports because he likes it.",a:false,r:"Виктор пишет все отчёты, потому что ему это нравится."},
+{s:"The container was delayed in Shanghai because of a strike.",a:false,r:"Контейнер задержался в Шанхае из-за забастовки."},
+{s:"The goods arrived two days late.",a:true,r:"Товары пришли с опозданием на два дня."},
+{s:"Andrey Viktorovich blamed Albina for the delay.",a:false,r:"Андрей Викторович обвинил Альбину в задержке."},
+{s:"Tomorrow an important client will visit the office.",a:true,r:"Завтра в офис приедет важный клиент."}],d)},
+{t:"Финальный босс",i:"Победи босса: Андрея Викторовича. У тебя 3 жизни. Каждый правильный ответ снимает часть шкалы босса.",f:(e,d)=>boss(e,[
+{s:"Yesterday Albina ___ three clients.",o:["calls","called","will call"],a:"called",r:"Вчера Альбина позвонила трём клиентам."},
+{s:"___ Maria work on Sundays?",o:["Do","Does","Did"],a:"Does",r:"Мария работает по воскресеньям?"},
+{s:"Tomorrow Viktor ___ a presentation.",o:["makes","made","will make"],a:"will make",r:"Завтра Виктор сделает презентацию."},
+{s:"Richard ___ coffee, he prefers milk.",o:["don’t drink","doesn’t drink","didn’t drink"],a:"doesn’t drink",r:"Ричард не пьёт кофе, он предпочитает молоко."},
+{s:"The office ___ last Monday because of the snow.",o:["doesn’t open","won’t open","didn’t open"],a:"didn’t open",r:"В прошлый понедельник офис не открывался из-за снега."},
+{s:"Did Viktor ___ the report yesterday?",o:["finish","finished","finishes"],a:"finish",r:"Виктор закончил отчёт вчера?"}],d,"Andrey Viktorovich 💼")}
+];
+
+
+const TABS=[
+{n:"🌿 Simple",sub:"🌸 Альбина, Мария, Виктор, Андрей Викторович и кот Ричард. Simple tenses 🌿",E:E3,ref:REF3,fin:"🎉 Все задания пройдены. Весь офис гордится тобой, даже Ричард! 🌿"}];
+const app=document.getElementById("app"),tabs=document.getElementById("tabs"),pb=document.getElementById("pb"),cnt=document.getElementById("cnt"),fin=document.getElementById("fin");
+const S=[];let cur=0;
+function upd(){const s=S[cur];pb.style.width=s.dn*100/s.n+"%";cnt.textContent=s.dn+" / "+s.n;fin.textContent=TABS[cur].fin;fin.style.display=s.dn==s.n?"block":"none"}
+function show(k){cur=k;S.forEach((s,i)=>{s.pane.style.display=i==k?"":"none"});document.getElementById("sub").textContent=TABS[k].sub;upd();window.scrollTo(0,0)}
+TABS.forEach((T,k)=>{const pane=h("div"),btn=h("button","tab",T.n),s={dn:0,n:T.E.length,pane,btn};S.push(s);app.append(pane);if(T.ref)pane.append(h('section','card','<h2>'+T.ref.t+'</h2>'+T.ref.html));
+T.E.forEach((x,i)=>{const c=h("section","card","<h2>"+(i+1)+". "+x.t+" "+IC[i]+"</h2><p class=instr>"+x.i+"</p>"),b=h("div");c.append(b);pane.append(c);
+let ok=0;x.f(b,()=>{if(ok)return;ok=1;c.classList.add("done");s.dn++;if(cur==k)upd()})})});
+show(0);
+</script>
+</body>
+</html>
